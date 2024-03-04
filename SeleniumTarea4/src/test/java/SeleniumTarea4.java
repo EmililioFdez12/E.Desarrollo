@@ -1,3 +1,4 @@
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -35,32 +36,26 @@ public class SeleniumTarea4 {
     Thread.sleep(1000);
     // Vamos a la segunda pagina
     driver.findElement(By.linkText("2")).click();
-    Thread.sleep(2000);
+    Thread.sleep(1000);
     // Tercera opcion
-    WebElement ofertas = driver.findElement(By.xpath("//*[@id=\"srp-river-results\"]/ul"));
-    List<WebElement> listaOfertas  = ofertas.findElements(By.tagName("li"));
-        
-    if (listaOfertas.size() >= 3) {
-      WebElement terceraOferta = listaOfertas.get(2);
-      WebElement divOferta = terceraOferta.findElement(By.className("s-item__link"));
-         
-    } else {
-      System.out.println("hola");
-    }
+    List<WebElement> listaOfertas = driver.findElements(By.xpath("//ul[@class=\"srp-results srp-list clearfix\"]/li"));     
+    WebElement terceraOferta = listaOfertas.get(2);
     
+    terceraOferta.findElement(By.tagName("img")).click();
+    Thread.sleep(1000);
     
+    List<String> pestañas = new ArrayList<String>(driver.getWindowHandles());
     
-
+    driver.switchTo().window(pestañas.get(1));
     
-//    driver.findElement(By.xpath("//*[@id=\"item1d69a20d30\"]/div/div[2]/a/div/span")).click();
-//    // Obtenemos el titulo de la consola que se vende
-////    WebElement elemento = driver.findElement(By.className("ux-textspans ux-textspans--BOLD"));
-////    System.out.println(elemento.getText()); 
-//    
-//    // Vemos si el boton de enviar a la cesta esta
-//    WebElement botonCesta = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/div/div[1]/div[2]/ul/li[2]/div/a"));   
-//    assertTrue("Esta",botonCesta.isDisplayed());
-//    
+    String textOferta = driver.getTitle();
+    System.out.println(textOferta);
+    
+    WebElement boton = driver.findElement(By.className("ux-call-to-action__cell"));
+    
+    assertTrue(boton.isDisplayed());
+                  
+    //getWindowHandles
     
   } catch (Exception e) {
     System.out.println(e.getMessage());
